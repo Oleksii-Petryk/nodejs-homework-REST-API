@@ -5,9 +5,9 @@ import { validateAuth } from '../../../midllewares/validation/userValidation';
 
 const router = new Router();
 
-router.post('/signup', validateAuth, registration);
-router.post('/login', validateAuth, login);
-router.post('/logout', guard, logout);
-router.get('/current', guard, getCurrentUser);
+router.post('/users/signup', validateAuth, registration);
+router.post('/users/login', validateAuth, login);
+router.post('/users/logout', guard, logout);
+router.get('/users/current', guard, getCurrentUser);
 
 export default router;
