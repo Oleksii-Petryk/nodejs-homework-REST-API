@@ -3,7 +3,6 @@
         "autocrop",
         "cloudinary",
         "midllewares",
-        "originalname",
         "virtuals"
     ]
 }
