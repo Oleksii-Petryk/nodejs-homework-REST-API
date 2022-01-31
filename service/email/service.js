@@ -45,7 +45,7 @@ class EmailService {
                         'To get started with our API, please click here:',
                     button: {
                         color:
-                            '#22BC66', // Optional action button color
+                            '#22BC66', 
                         text:
                             'Confirm your account',
                         link:

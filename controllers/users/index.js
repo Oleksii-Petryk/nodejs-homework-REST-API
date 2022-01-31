@@ -73,10 +73,10 @@ const repeatEmailForVerifyUser = async (req, res, next) => {
             });  
         };
         
-        return res.status(HttpCode.UE).json({
+        return res.status(HttpCode.SE).json({
             status: 'error',
-            code: HttpCode.UE,
-            data: { message: 'Unprocessable Entity' },
+            code: HttpCode.SE,
+            data: { message: 'Service Unavailable' },
         });
     };
     
