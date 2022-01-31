@@ -4,6 +4,7 @@
         "cloudinary",
         "midllewares",
         "originalname",
+        "Sendgrid",
         "virtuals"
     ]
 }
