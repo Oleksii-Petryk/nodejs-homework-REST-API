@@ -1,10 +1,11 @@
 import { HttpCode } from '../../lib/constants';
 import AuthService from '../../service/auth';
-
+import { EmailService, SenderSendgrid } from '../../service/email';
 const authService = new AuthService();
 
 const registration = async (req, res, next) => {
-    const { email } = req.body;
+   try {
+     const { email } = req.body;
     const isUserExist = await authService.isUserExist(email);
     if (isUserExist) {
        return res
@@ -12,13 +13,34 @@ const registration = async (req, res, next) => {
            .json({
                status: 'error', code: HttpCode.CONFLICT, message: 'Email in use',
            });
+       };
+       
+       const userData = await authService.create(req.body);
+       const emailService = new EmailService(
+           process.env.NODE_ENV,
+           new SenderSendgrid(),
+       );
+
+       const isSend = await emailService.sendVerifyEmail(
+           email,
+           userData.name,
+           userData.verifyTokenEmail,
+       );
+
+       delete userData.verifyTokenEmail;
+       
+       res
+        .status(HttpCode.CREATED)
+        .json({
+            status: 'success',
+            code: HttpCode.CREATED,
+            data: { ...userData, isSendEmailVerify: isSend },
+        });
+       
+   } catch (error) {
+       next(error)
     };
-
-    const data = await authService.create(req.body);
-
-    res
-        .status(HttpCode.OK)
-        .json({ status: 'success', code: HttpCode.OK, data });
+     
 };
 
 const login = async (req, res, next) => {
